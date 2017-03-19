@@ -1,0 +1,28 @@
+{
+  "name": "booklog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "autobahn": "^0.11.2",
+    "body-parser": "^1.17.1",
+    "cors": "^2.8.1",
+    "express": "^4.15.2",
+    "express-winston": "^2.3.0",
+    "gdax": "^0.3.1",
+    "lodash": "3.10.1",
+    "mongoose": "^4.9.1",
+    "poloniex-unofficial": "^1.1.2",
+    "request": "^2.81.0",
+    "winston": "^2.3.1",
+    "ws": "^2.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^3.18.0"
+  }
+}
