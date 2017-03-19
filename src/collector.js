@@ -66,7 +66,7 @@ class Collector {
         asks,
         bids,
         seq,
-        timestamps: new Date()
+        timestamp: new Date()
       }).save();
     });
   }
