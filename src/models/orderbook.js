@@ -14,7 +14,7 @@ const orderbookSchema = new Schema({
 	bids: [recordSchema],
 	asks: [recordSchema],
   seq: Number,
-  timestamps: Date,
+  timestamp: Date,
 }, {
 		timestamps: true,
 	});

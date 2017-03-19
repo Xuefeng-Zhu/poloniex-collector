@@ -26,7 +26,7 @@ const initDB = () => new Promise(
 
 initDB()
   .then(() => {
-    // new Collector().start();
+    new Collector().start();
     app.listen(config.port, () => {
       logger.info(`server started on port ${config.port} (${config.env})`);
     })

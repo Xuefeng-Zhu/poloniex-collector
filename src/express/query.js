@@ -4,7 +4,7 @@ const Event = require('../models/event');
 const logger = require('../logger');
 
 const getRecentOrderbook = (date) => {
-  return Orderbook.findOne({ timestamps: { $lte: date } })
+  return Orderbook.findOne({ timestamp: { $lte: date } })
     .sort('-seq')
     .exec();
 };
@@ -57,7 +57,7 @@ const getNewOrderbook = (orderbook, events) => {
   newOrderbook.seq = lastEvent.seq;
   newOrderbook.asks = _.values(newOrderbook.asks);
   newOrderbook.bids = _.values(newOrderbook.bids);
-  newOrderbook.timestamps = events.createdAt;
+  newOrderbook.timestamp = events.createdAt;
 
   new Orderbook(newOrderbook).save();
   return newOrderbook;
@@ -69,7 +69,7 @@ const handleQuery = (req, res) => {
 
   getRecentOrderbook(date)
     .then((orderbook) => {
-      if (orderbook.timestamps.valueOf() === time) {
+      if (orderbook.timestamp.valueOf() === time) {
         res.json(orderbook);
       }
 
