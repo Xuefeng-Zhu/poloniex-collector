@@ -4,7 +4,10 @@ const Schema = mongoose.Schema;
 const eventSchema = new Schema({
   type: String,
   data: Schema.Types.Mixed,
-  seq: Number
+  seq: {
+    type: Number,
+    index: true,
+  }
 }, {
   timestamps: true,
 });

@@ -13,7 +13,10 @@ const recordSchema = new Schema({
 const orderbookSchema = new Schema({
   bids: [recordSchema],
   asks: [recordSchema],
-  seq: Number,
+  seq: {
+    type: Number,
+    index: true,
+  },
   timestamp: Date,
 }, {
   timestamps: true,

@@ -10,16 +10,19 @@ const getRecentOrderbook = (date) => {
 };
 
 const getEvents = (seq, end) => {
-  return Event.find({
-    seq: {
-      $gt: seq,
-    },
-    createdAt: {
-      $lte: end,
-    },
-  })
-  .sort('createdAt')
-  exec();
+  return Event.findOne({ createdAt: { $lte: end } })
+    .sort('-seq')
+    .exec()
+    .then((event) => {
+      return Event.find({
+        seq: {
+          $gt: seq,
+          $lte: event.seq,
+        }
+      })
+      .sort('seq createdAt')
+      exec();
+    });
 }
 
 const handleRemove = (orderbook, data) => {

@@ -5,7 +5,7 @@ const logger = require('./logger');
 const Orderbook = require('./models/orderbook');
 const Event = require('./models/event');
 
-const { market, depth } = config;
+const { market, depth, pollFrequency } = config;
 const orderbookApi = `https://poloniex.com/public?command=returnOrderBook&currencyPair=${market}&depth=${depth}`;
 const socketUrl = 'wss://api.poloniex.com';
 
@@ -24,11 +24,15 @@ class Collector {
   start() {
     this.connection.open();
     this.fetchOrderbook();
+
+    setInterval(() => {
+      this.fetchOrderbook();
+    }, pollFrequency);
   }
 
   onMarketEvent(marketEvents, meta, details) {
     const { seq } = meta;
-    console.log(seq)
+    // console.log(seq)
     // if (!this.prevSeq) {
     //   this.prevSeq = seq;
     // } else {
