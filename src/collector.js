@@ -17,7 +17,7 @@ class Collector {
     });
 
     this.connection.onopen = (session) => {
-      session.subscribe(market, this.onMarketEvent);
+      session.subscribe(market, this.onMarketEvent.bind(this));
     }
   }
 
@@ -26,18 +26,19 @@ class Collector {
     this.fetchOrderbook();
   }
 
-  onMarketEvent(marketEvents, meta) {
+  onMarketEvent(marketEvents, meta, details) {
     const { seq } = meta;
-    if (!this.prevSeq) {
-      this.prevSeq = seq;
-    } else {
-      if (seq - this.prevSeq > 1) {
-        logger.warning('Seq was dropped. Fetch full order book');
-        this.fetchOrderbook();
-      }
+    console.log(seq)
+    // if (!this.prevSeq) {
+    //   this.prevSeq = seq;
+    // } else {
+    //   if (seq - this.prevSeq > 1) {
+    //     logger.info('Seq was dropped. Fetch full order book');
+    //     this.fetchOrderbook();
+    //   }
 
-      this.prevSeq = seq;
-    }
+    //   this.prevSeq = seq;
+    // }
 
     marketEvents.forEach((marketEvent) => {
       const { type, data } = marketEvent;
