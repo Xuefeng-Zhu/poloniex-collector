@@ -57,20 +57,31 @@ const getNewOrderbook = (orderbook, events) => {
   newOrderbook.seq = lastEvent.seq;
   newOrderbook.asks = _.values(newOrderbook.asks);
   newOrderbook.bids = _.values(newOrderbook.bids);
-  newOrderbook.timestamp = events.createdAt;
+  newOrderbook.timestamp = lastEvent.createdAt;
 
   new Orderbook(newOrderbook).save();
   return newOrderbook;
 };
 
+const sendOrderbook = (res, orderbook, depth) => {
+  let { timestamp, bids, asks } = orderbook;
+
+  if (depth) {
+    bids = _.slice(bids, 0, depth);
+    asks = _.slice(asks, 0, depth);
+  }
+  return res.json({ timestamp, bids, asks });
+};
+
 const handleQuery = (req, res) => {
   const time = parseInt(req.query.time, 10);
+  const depth = parseInt(req.query.depth, 10);
   const date = new Date(time);
 
   getRecentOrderbook(date)
     .then((orderbook) => {
       if (orderbook.timestamp.valueOf() === time) {
-        res.json(orderbook);
+        return sendOrderbook(res, orderbook, depth);
       }
 
       logger.info('Do not find matched orderbook. Start to build');
@@ -78,7 +89,7 @@ const handleQuery = (req, res) => {
       getEvents(orderbook.seq, date)
         .then((events) => {
           const newOrderbook = getNewOrderbook(orderbook, events);
-          res.json(newOrderbook);
+          return sendOrderbook(res, newOrderbook, depth);
         });
     });
 };

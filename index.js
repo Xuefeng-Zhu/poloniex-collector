@@ -26,8 +26,11 @@ const initDB = () => new Promise(
 
 initDB()
   .then(() => {
-    new Collector().start();
-    app.listen(config.port, () => {
-      logger.info(`server started on port ${config.port} (${config.env})`);
-    })
+    if (process.env.EXPRESS) {
+      app.listen(config.port, () => {
+        logger.info(`server started on port ${config.port} (${config.env})`);
+      });
+    } else {
+      new Collector().start();
+    }
   });

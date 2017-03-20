@@ -7,4 +7,4 @@
 
 # REST API
 
-* `/query?time=[timestamp]`
+* `/query?time=[timestamp]&depth=[number]`
