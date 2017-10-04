@@ -21,6 +21,7 @@
     "moment": "^2.18.1",
     "mongoose": "^4.9.1",
     "poloniex-unofficial": "^1.1.2",
+    "python-shell": "^0.4.0",
     "request": "^2.81.0",
     "winston": "^2.3.1",
     "ws": "^2.2.1"
